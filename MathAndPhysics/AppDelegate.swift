@@ -65,7 +65,11 @@ extension AppDelegate {
   }
   
   private func presentGravityScene() {
-    // ...
+    guard let scene = GravityScene(fileNamed: "") else {
+      return
+    }
+    
+    presentScene(scene)
   }
   
   private func presentScene(scene: SKScene) {
