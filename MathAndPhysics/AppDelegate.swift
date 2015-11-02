@@ -10,6 +10,13 @@
 import Cocoa
 import SpriteKit
 
+struct Notification {
+  struct Name {
+    static let presentMove = "com.MathAndPhysics.move"
+    static let presentGravity = "com.MathAndPhysics.gravity"
+  }
+}
+
 @NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate {
   
@@ -19,12 +26,27 @@ class AppDelegate: NSObject, NSApplicationDelegate {
   func applicationDidFinishLaunching(aNotification: NSNotification) {
     window.acceptsMouseMovedEvents = true
     
+    observeNotifications()
     presentMenu()
+  }
+  
+  deinit {
+    NSNotificationCenter.defaultCenter().removeObserver(self)
   }
   
 }
 
 extension AppDelegate {
+  
+  private func observeNotifications() {
+    NSNotificationCenter.defaultCenter().addObserverForName(Notification.Name.presentMove, object: nil, queue: NSOperationQueue.mainQueue()) { _ in
+      self.presentMoveScene()
+    }
+    
+    NSNotificationCenter.defaultCenter().addObserverForName(Notification.Name.presentGravity, object: nil, queue: NSOperationQueue.mainQueue()) { _ in
+      self.presentGravityScene()
+    }
+  }
   
   private func presentMenu() {
     guard let scene = MenuScene(fileNamed: "") else {
@@ -42,13 +64,17 @@ extension AppDelegate {
     presentScene(scene)
   }
   
+  private func presentGravityScene() {
+    // ...
+  }
+  
   private func presentScene(scene: SKScene) {
     scene.scaleMode = .AspectFit
     
     skView.showsFPS = true
     skView.showsNodeCount = true
     
-    skView.presentScene(scene)
+    skView.presentScene(scene, transition: SKTransition.doorwayWithDuration(1.0))
     window.makeFirstResponder(scene)
   }
   

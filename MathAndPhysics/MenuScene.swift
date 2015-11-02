@@ -27,7 +27,30 @@ class MenuScene: SKScene {
   }
   
   override func mouseMoved(theEvent: NSEvent) {
-    print(theEvent.locationInNode(self))
+    let mouseLocation = theEvent.locationInNode(container)
+
+    if moveButton.containsPoint(mouseLocation) {
+      moveButton.setScale(1.2)
+      gravityButton.setScale(1.0)
+    } else if gravityButton.containsPoint(mouseLocation) {
+      moveButton.setScale(1.0)
+      gravityButton.setScale(1.2)
+    } else {
+      moveButton.setScale(1.0)
+      gravityButton.setScale(1.0)
+    }
+  }
+  
+  override func mouseUp(theEvent: NSEvent) {
+    let mouseLocation = theEvent.locationInNode(container)
+    
+    if moveButton.containsPoint(mouseLocation) {
+      NSNotificationCenter.defaultCenter().postNotificationName(Notification.Name.presentMove, object: self)
+    }
+    
+    if gravityButton.containsPoint(mouseLocation) {
+      NSNotificationCenter.defaultCenter().postNotificationName(Notification.Name.presentGravity, object: self)
+    }
   }
   
 }
