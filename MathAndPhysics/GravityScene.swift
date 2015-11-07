@@ -13,11 +13,12 @@ struct KeyCode {
   static let right = 124
   static let down = 125
   static let up = 126
+  static let space = 49
 }
 
 private struct Speed {
-  let x: CGFloat
-  let y: CGFloat
+  var x: CGFloat
+  var y: CGFloat
   
   static let zero = Speed(x: 0, y: 0)
 }
@@ -26,7 +27,13 @@ class GravityScene: SKScene {
 
   private var mario = SKSpriteNode(imageNamed: "mario")
   private var marioSpeed = Speed.zero
-  private var marioSpeedDelta: CGFloat = 5
+  private var jumpping = false
+  
+  private struct Constant {
+    static let speedDelta: CGFloat = 5
+    static let terrainHeight: CGFloat = 60
+    static let jumpDelta: CGFloat = 85
+  }
   
   override func didMoveToView(view: SKView) {
     backgroundColor = NSColor.whiteColor()
@@ -38,7 +45,7 @@ class GravityScene: SKScene {
   private func setupMario() {
     mario.setScale(0.5)
     mario.anchorPoint = CGPoint(x: 0.5, y: 0)
-    mario.position = CGPoint(x: center.x, y: 60)
+    mario.position = CGPoint(x: center.x, y: Constant.terrainHeight)
     addChild(mario)
   }
   
@@ -47,7 +54,7 @@ class GravityScene: SKScene {
     let terrainTileRectPtr = UnsafeMutablePointer<CGRect>.alloc(1)
     terrainTileRectPtr.memory = terrainTileRect
     let terrainImage = NSImage(named: "terrain")?.CGImageForProposedRect(terrainTileRectPtr, context: nil, hints: nil)
-    let coverageSize = CGSize(width: size.width, height: 60)
+    let coverageSize = CGSize(width: size.width, height: Constant.terrainHeight)
     let image = NSImage(size: coverageSize)
     image.lockFocus()
     let context = NSGraphicsContext.currentContext()?.CGContext
@@ -62,13 +69,19 @@ class GravityScene: SKScene {
   }
   
   override func keyDown(theEvent: NSEvent) {
-    switch Int(theEvent.keyCode)
-    {
+    switch Int(theEvent.keyCode) {
     case KeyCode.left:
-      marioSpeed = Speed(x: -marioSpeedDelta, y: 0)
+      marioSpeed.x = -Constant.speedDelta
       
     case KeyCode.right:
-      marioSpeed = Speed(x: marioSpeedDelta, y: 0)
+      marioSpeed.x = Constant.speedDelta
+      
+    case KeyCode.space:
+      guard !jumpping else {
+        break
+      }
+      jumpping = true
+      marioSpeed.y = Constant.speedDelta
       
     default:
       break
@@ -76,15 +89,35 @@ class GravityScene: SKScene {
   }
   
   override func keyUp(theEvent: NSEvent) {
-    marioSpeed = Speed.zero
+    switch Int(theEvent.keyCode) {
+    case KeyCode.left, KeyCode.right:
+      marioSpeed.x = 0
+      
+    default:
+      break
+    }
   }
   
   override func update(currentTime: NSTimeInterval) {
     var resultPosition = mario.position
     resultPosition.x += marioSpeed.x
+    resultPosition.y += marioSpeed.y
     
-    guard resultPosition.x > 0 && resultPosition.x < size.width else {
-      return
+    // Horizontal Moving
+    if !(resultPosition.x > 0 && resultPosition.x < size.width) {
+      resultPosition.x = mario.position.x
+    }
+    
+    // Vertical Moving
+    if resultPosition.y >= (Constant.terrainHeight + Constant.jumpDelta) {
+      resultPosition.y = mario.position.y
+      marioSpeed.y = -Constant.speedDelta
+    }
+    
+    if resultPosition.y <= Constant.terrainHeight {
+      resultPosition.y = Constant.terrainHeight
+      marioSpeed.y = 0
+      jumpping = false
     }
     
     mario.position = resultPosition
