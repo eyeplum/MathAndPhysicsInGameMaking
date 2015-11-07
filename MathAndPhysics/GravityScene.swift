@@ -26,6 +26,8 @@ private struct Speed {
 class GravityScene: SKScene {
 
   private var mario = SKSpriteNode(imageNamed: "mario")
+  private var marioTexture = SKTexture(imageNamed: "mario")
+  private var marioJumpTexture = SKTexture(imageNamed: "mario-jump")
   private var marioSpeed = Speed.zero
   private var jumpping = false
   
@@ -40,10 +42,10 @@ class GravityScene: SKScene {
     
     setupMario()
     setupTerrain()
+    playBGM()
   }
   
   private func setupMario() {
-    mario.setScale(0.5)
     mario.anchorPoint = CGPoint(x: 0.5, y: 0)
     mario.position = CGPoint(x: center.x, y: Constant.terrainHeight)
     addChild(mario)
@@ -80,7 +82,7 @@ class GravityScene: SKScene {
       guard !jumpping else {
         break
       }
-      jumpping = true
+      toggleJump(true)
       marioSpeed.y = Constant.speedDelta
       
     default:
@@ -117,10 +119,31 @@ class GravityScene: SKScene {
     if resultPosition.y <= Constant.terrainHeight {
       resultPosition.y = Constant.terrainHeight
       marioSpeed.y = 0
-      jumpping = false
+      toggleJump(false)
     }
     
     mario.position = resultPosition
+  }
+  
+  private func playJumpSound() {
+    self.runAction(SKAction.playSoundFileNamed("jump.mp3", waitForCompletion: false))
+  }
+  
+  private func playBGM() {
+    self.runAction(SKAction.playSoundFileNamed("bgm.mp3", waitForCompletion: false))
+  }
+  
+  private func toggleJump(jumpping: Bool) {
+    self.jumpping = jumpping
+    
+    if jumpping {
+      mario.texture = marioJumpTexture
+      mario.size = marioJumpTexture.size()
+      playJumpSound()
+    } else {
+      mario.texture = marioTexture
+      mario.size = marioTexture.size()
+    }
   }
   
 }

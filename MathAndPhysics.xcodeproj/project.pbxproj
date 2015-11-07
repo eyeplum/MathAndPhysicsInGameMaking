@@ -13,6 +13,8 @@
 		0B3E0C3F1BE4E2490097848C /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0B3E0C3D1BE4E2490097848C /* MainMenu.xib */; };
 		0B3E0C4A1BE65A650097848C /* MenuScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B3E0C491BE65A650097848C /* MenuScene.swift */; };
 		0B3E0C4E1BE660DE0097848C /* SKScene+Addition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B3E0C4D1BE660DE0097848C /* SKScene+Addition.swift */; };
+		0B89D5591BEE5C62008AA277 /* jump.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 0B89D5571BEE5C62008AA277 /* jump.mp3 */; };
+		0B89D55A1BEE5C62008AA277 /* bgm.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 0B89D5581BEE5C62008AA277 /* bgm.mp3 */; };
 		0BC255881BE7B8AD007D8D41 /* MoveScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 0BC255871BE7B8AD007D8D41 /* MoveScene.sks */; };
 		0BC2558A1BE7B8B2007D8D41 /* MenuScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 0BC255891BE7B8B2007D8D41 /* MenuScene.sks */; };
 		0BC2558C1BE7BD65007D8D41 /* GravityScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BC2558B1BE7BD65007D8D41 /* GravityScene.swift */; };
@@ -28,6 +30,8 @@
 		0B3E0C401BE4E2490097848C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0B3E0C491BE65A650097848C /* MenuScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuScene.swift; sourceTree = "<group>"; };
 		0B3E0C4D1BE660DE0097848C /* SKScene+Addition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SKScene+Addition.swift"; sourceTree = "<group>"; };
+		0B89D5571BEE5C62008AA277 /* jump.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = jump.mp3; path = ../../../Downloads/jump.mp3; sourceTree = "<group>"; };
+		0B89D5581BEE5C62008AA277 /* bgm.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = bgm.mp3; path = ../../../Downloads/bgm.mp3; sourceTree = "<group>"; };
 		0BC255871BE7B8AD007D8D41 /* MoveScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = MoveScene.sks; sourceTree = "<group>"; };
 		0BC255891BE7B8B2007D8D41 /* MenuScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = MenuScene.sks; sourceTree = "<group>"; };
 		0BC2558B1BE7BD65007D8D41 /* GravityScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GravityScene.swift; sourceTree = "<group>"; };
@@ -88,6 +92,8 @@
 		0B3E0C471BE65A1F0097848C /* Gravity */ = {
 			isa = PBXGroup;
 			children = (
+				0B89D5571BEE5C62008AA277 /* jump.mp3 */,
+				0B89D5581BEE5C62008AA277 /* bgm.mp3 */,
 				0BC2558B1BE7BD65007D8D41 /* GravityScene.swift */,
 				0BC2558D1BE7BD76007D8D41 /* GravityScene.sks */,
 			);
@@ -163,9 +169,11 @@
 			files = (
 				0BC255881BE7B8AD007D8D41 /* MoveScene.sks in Resources */,
 				0B3E0C3C1BE4E2490097848C /* Assets.xcassets in Resources */,
+				0B89D5591BEE5C62008AA277 /* jump.mp3 in Resources */,
 				0BC2558E1BE7BD76007D8D41 /* GravityScene.sks in Resources */,
 				0B3E0C3F1BE4E2490097848C /* MainMenu.xib in Resources */,
 				0BC2558A1BE7B8B2007D8D41 /* MenuScene.sks in Resources */,
+				0B89D55A1BEE5C62008AA277 /* bgm.mp3 in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
